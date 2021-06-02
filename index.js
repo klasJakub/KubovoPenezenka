@@ -1,5 +1,22 @@
 class KubovoPenezenka {
 
+
+    constructor() {
+        this.themeSwitch = document.getElementById(
+            "theme-switch");
+        if (localStorage.getItem("theme")) {
+            const mode = localStorage.getItem("theme");
+            this.setColorMode(mode);
+            if (mode === "dark") {
+                this.themeSwitch.checked = true;
+            }
+        } else {
+            localStorage.setItem("theme", "light");
+            this.setColorMode("light");
+        }
+        this.colorModeListeners();
+    }
+
     colorModeListeners() {
         const listener = (event) => {
             const element = event.target;
@@ -38,3 +55,5 @@ class KubovoPenezenka {
             .classList.add(mode);
     }
 }
+
+const main = new KubovoPenezenka()
