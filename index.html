@@ -23,7 +23,7 @@
         <li class="nav-item switch-item">
             <label for="theme-switch">Theme:</label>
             <label class="switch">
-                <input type="checkbox" id="theme-switch" />
+                <input type="checkbox" id="theme-switch"/>
                 <span class="slider"></span>
             </label>
         </li>
@@ -31,17 +31,19 @@
 </nav>
 <header>
     <h2>Penežní zůstatek</h2>
-
-    <label id="money_label"></label>
-    <form class="money_form">
-
-        <input type="text" value="0">
-        <input type="submit" value="pridat money">
-
-
+</header>
+<div class="container">
+    <form>
+        <div class="form-group row">
+            <label for="money-count">Kolik chceš přidat?</label>
+            <input class="form-control" id="money-count" type="number"/>
+            <button id="save-secret" class="success">
+                Přidej love
+            </button>
+        </div>
 
     </form>
-</header>
+</div>
 
 
 <script src="index.js"></script>
