@@ -1,5 +1,6 @@
 class KubovoPenezenka {
 
+
     //test
 
     constructor() {
@@ -15,7 +16,19 @@ class KubovoPenezenka {
             localStorage.setItem("theme", "light");
             this.setColorMode("light");
         }
+        this.transactions = this.generateRandomTransactions();
+        console.log(this.transactions);
+        console.log(this.transactions.map(item => item.amount).reduce((prev, next) => prev + next));
         this.colorModeListeners();
+    }
+
+    generateRandomTransactions() {
+        let transactions = [];
+        for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
+            const amount = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
+            transactions.push({id: i, amount});
+        }
+        return transactions;
     }
 
     colorModeListeners() {
