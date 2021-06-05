@@ -27,21 +27,44 @@ class KubovoPenezenka {
         console.log(this.transactions);
         this.generateListItemsFromTransactions();
         this.colorModeListeners();
-        document.getElementById("add-money").addEventListener("click", (e) => {
-            e.preventDefault();
-            let transaction = this.generateTransaction(false, true);
-            let id = Math.max(...this.transactions.map(t => t.id)) + 1;
-            this.transactions.push({...transaction, id});
-            this.saveTransactionsToStorage();
-            this.generateListItemsFromTransactions();
-        });
+        const amountInput = document.getElementById("amount-input");
         document.getElementById("send-money").addEventListener("click", (e) => {
             e.preventDefault();
-            let transaction = this.generateTransaction(true, true);
-            let id = Math.max(...this.transactions.map(t => t.id)) + 1;
-            this.transactions.push({...transaction, id});
-            this.saveTransactionsToStorage();
-            this.generateListItemsFromTransactions();
+            if (amountInput.value.length !== 0) {
+                let transaction = this.generateTransaction(true, true);
+                try {
+                    let id = Math.max(...this.transactions.map(t => t.id)) + 1;
+                    transaction.amount = -parseInt(amountInput.value) || 0;
+                    if (transaction.amount === 0) {
+                        return;
+                    }
+                    this.transactions.push({...transaction, id});
+                    this.saveTransactionsToStorage();
+                    this.generateListItemsFromTransactions();
+                    amountInput.value = null;
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        });
+        document.getElementById("add-money").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (amountInput.value.length !== 0) {
+                let transaction = this.generateTransaction(true, true);
+                try {
+                    let id = Math.max(...this.transactions.map(t => t.id)) + 1;
+                    transaction.amount = parseInt(amountInput.value) || 0;
+                    if (transaction.amount === 0) {
+                        return;
+                    }
+                    this.transactions.push({...transaction, id});
+                    this.saveTransactionsToStorage();
+                    this.generateListItemsFromTransactions();
+                    amountInput.value = null;
+                } catch (e) {
+                    console.log(e)
+                }
+            }
         })
     }
 
