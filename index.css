@@ -17,6 +17,16 @@
     overflow: auto;
 }
 
+.transaction-item {
+    height: 100%;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: #2c2e2f;
+    font-weight: 400;
+    text-align: -webkit-match-parent;
+}
+
 button {
     display: inline-block;
     font-weight: 400;

@@ -16,19 +16,50 @@ class KubovoPenezenka {
             localStorage.setItem("theme", "light");
             this.setColorMode("light");
         }
-        this.transactions = this.generateRandomTransactions();
+        if (localStorage.getItem("transactions") === null) {
+            this.transactions = this.generateRandomTransactions();
+            localStorage.setItem("transactions", JSON.stringify(this.transactions));
+        } else {
+            this.transactions = JSON.parse(localStorage.getItem("transactions"));
+        }
         console.log(this.transactions);
-        console.log(this.transactions.map(item => item.amount).reduce((prev, next) => prev + next));
+        console.log();
+        this.generateListItemsFromTransactions();
         this.colorModeListeners();
     }
 
     generateRandomTransactions() {
         let transactions = [];
+        const startDate = new Date('2020-01-01T01:00:00');
+        const today = new Date();
         for (let i = 0; i < Math.floor(Math.random() * 100); i++) {
             const amount = Math.random() < 0.5 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100);
-            transactions.push({id: i, amount});
+            const date = new Date(startDate.getTime() + Math.random() * (today.getTime() - startDate.getTime()));
+            transactions.push({id: i, amount, date});
         }
-        return transactions;
+        return transactions.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+        });
+    }
+
+    generateListItemsFromTransactions() {
+        const htmlList = document.getElementById("transaction-list");
+        for (let transaction of this.transactions) {
+            let item = document.createElement("li");
+            let amount = document.createElement("div");
+            amount.innerText = `${transaction?.amount} CZK`;
+            let date = document.createElement("div");
+            let dateObject = new Date(transaction.date);
+            console.log(dateObject);
+            date.innerText = `${dateObject.getDate()+1}. ${dateObject.getMonth()+1}. ${dateObject.getFullYear()}`;
+            item.id = `tran-${transaction.id}`;
+            item.classList.add("transaction-item");
+            item.appendChild(amount);
+            item.appendChild(date);
+            htmlList.appendChild(item);
+        }
+        let sum = this.transactions.map(item => item.amount).reduce((prev, next) => prev + next);
+        document.getElementById("balance-amm").innerText = `${sum} CZK`;
     }
 
     colorModeListeners() {
@@ -43,9 +74,7 @@ class KubovoPenezenka {
             localStorage.setItem("theme", element.id);
         };
         this.themeSwitch.addEventListener("change", (e) => {
-            const target = e.target
-            as
-            HTMLInputElement;
+            const target = e.target;
             if (target.checked) {
                 this.setColorMode("dark");
                 localStorage.setItem("theme", "dark");
