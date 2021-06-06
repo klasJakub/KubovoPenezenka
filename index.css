@@ -52,12 +52,16 @@ a {
 }
 
 nav {
-    height: 50px;
+    height: 80px;
     width: 100%;
     background: var(--bg-nav);
     color: var(--text);
 }
-
+.wallet-img{
+    width: 70px;
+    heigh:70px;
+    margin-left:30px;
+}
 nav ul {
     display: flex;
     align-items: center;
@@ -179,6 +183,16 @@ label {
     padding-left: 5px;
     padding-right: 5px;
 }
+.amount-cont{
+    background-color: var(--color4);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.balance p{
+    font-size: 1.5rem;
+
+}
 /*transation dropdown*/
 
 .add-transaction-btn {
@@ -187,17 +201,19 @@ label {
     padding: 16px;
     font-size: 16px;
     border: none;
+    border-radius: 10px;
 }
 
 .add-transaction {
     position: relative;
     display: inline-block;
+
 }
 
 .add-transaction-content {
     display: none;
     position: absolute;
-    background-color: var(--color2);
+    background-color: var(--color4);
     min-width: 300px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -228,6 +244,7 @@ label {
     font-size: 12px;
     border: none;
     border-radius: 7px;
+    margin: 5px 10px;
 }
 .add-transaction:hover .add-transaction-content {display: block;}
 
